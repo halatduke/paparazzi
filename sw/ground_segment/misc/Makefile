@@ -57,10 +57,10 @@ GLIB_LDFLAGS = $(shell pkg-config glib-2.0 --libs) -lglibivy -lm $(shell pcre-co
 INCLUDES += $(shell pkg-config glib-2.0 --cflags) -I$(PAPARAZZI_SRC)/sw/airborne/ -I$(PAPARAZZI_SRC)/sw/include/ $(IVY_INC)
 INCLUDES += -I$(PAPARAZZI_SRC)/sw/ext/libsbp/c/include/ -I$(PAPARAZZI_SRC)/sw/airborne/arch/linux/
 
-all: davis2ivy kestrel2ivy natnet2ivy sbp2ivy video_synchronizer sbs2ivy
+all: davis2ivy kestrel2ivy natnet2ivy vicon2ivy sbp2ivy video_synchronizer sbs2ivy
 
 clean:
-	$(Q)rm -f *.o davis2ivy kestrel2ivy natnet2ivy sbp2ivy video_synchronizer sbs2ivy
+	$(Q)rm -f *.o davis2ivy kestrel2ivy natnet2ivy vicon2ivy sbp2ivy video_synchronizer sbs2ivy
 
 davis2ivy: davis2ivy.o
 	@echo CC $@
@@ -71,6 +71,10 @@ kestrel2ivy: kestrel2ivy.o
 	$(Q)$(CC) $(CFLAGS) -o $@ $^ $(LIBRARYS) $(IVY_LDFLAGS)
 
 natnet2ivy: natnet2ivy.o pprz_geodetic_double.o pprz_algebra_double.o udp_socket.o
+	@echo CC $@
+	$(Q)$(CC) $(CFLAGS) -o $@ $^ $(LIBRARYS) $(GLIB_LDFLAGS) $(IVY_LDFLAGS)
+
+vicon2ivy: vicon2ivy.o pprz_geodetic_double.o pprz_algebra_double.o udp_socket.o
 	@echo CC $@
 	$(Q)$(CC) $(CFLAGS) -o $@ $^ $(LIBRARYS) $(GLIB_LDFLAGS) $(IVY_LDFLAGS)
 
