@@ -48,7 +48,7 @@
     <program name="App Server" command="sw/ground_segment/tmtc/app_server"/>
     <program name="Network Server" command="sw/ground_segment/tmtc/network2ivy"/>
     <program name="NatNet" command="sw/ground_segment/misc/natnet2ivy"/>
-    <program name="Vicon" command="sw/ground_segment/misc/vicon2ivy"/>
+    <program name="Vicon" command="sw/ground_segment/misc/vicon2ivy -ac 0 31"/>
     <program name="Ivy2Nmea" command="sw/ground_segment/tmtc/ivy2nmea">
       <arg flag="--port" constant="/dev/ttyUSB1"/>
       <arg flag="--id" constant="1"/>
