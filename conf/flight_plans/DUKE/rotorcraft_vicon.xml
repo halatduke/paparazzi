@@ -28,7 +28,17 @@
     <waypoint name="demo1" x="-1.5" y="2.5"/>
     <waypoint name="demo2" x="1.5" y="-2.5"/>
     <waypoint name="demo3" x="-1.3" y="-2.3"/>
-    <waypoint name="demo4" x="1.3" y="2.3"/>
+    <waypoint name="demo4" x="1.3" y="2.3"/> 
+
+    <waypoint name="Room_Origin" x="0" y="0"/>
+
+    <waypoint name="L_f" x="-1.579" y="2.670"  height="1.180"/>
+    <waypoint name="L_c" x="-1.579" y="0.670"  height="1.180"/>
+    <waypoint name="L_b" x="-1.579" y="-1.330" height="1.180"/>
+
+    <waypoint name="R_f" x="1.587"  y="2.638"  height="1.225"/>
+    <waypoint name="R_c" x="1.587"  y="0.638"  height="1.225"/>
+    <waypoint name="R_b" x="1.587"  y="-1.362" height="1.225"/>
 
   </waypoints>
   <sectors>
@@ -54,11 +64,11 @@
     </block>
     <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
       <exception cond="stateGetPositionEnu_f()->z > 1.0" deroute="Standby"/>
-      <call fun="NavSetWaypointHere(WP_CLIMB)"/>
-      <stay climb="nav_climb_vspeed" vmode="climb" wp="CLIMB"/>
+      <call fun="NavSetWaypointHere(WP_Room_Origin)"/>
+      <stay climb="nav_climb_vspeed" vmode="climb" wp="Room_Origin"/>
     </block>
     <block name="Standby" strip_button="Standby" strip_icon="home.png">
-      <stay wp="STDBY"/>
+      <stay wp="Room_Origin"/>
     </block>
     <block name="START" strip_button="Go" strip_icon="lookfore.png">
       <call fun="NavSetWaypointHere(WP_GOAL)"/>
@@ -103,6 +113,35 @@
         <go from="demo4" hmode="route" wp="HOME"/>
         <deroute block="land here"/>
     </block>
+
+    <block name="TB - L_f">
+      <stay wp="L_f"/>
+    </block>
+
+    <block name="TB - L_c">
+      <stay wp="L_c"/>
+    </block>
+
+    <block name="TB - L_b">
+      <stay wp="L_b"/>
+    </block>
+
+    <block name="TB - R_f">
+      <stay wp="R_f"/>
+    </block>
+
+    <block name="TB - R_c">
+      <stay wp="R_c"/>
+    </block>
+
+    <block name="TB - R_b">
+      <stay wp="R_b"/>
+    </block>
+
+
+
+
+
     <block name="land here" strip_button="Land Here" strip_icon="land-right.png">
       <call fun="NavSetWaypointHere(WP_TD)"/>
     </block>

@@ -181,8 +181,8 @@ void natnet_parse(unsigned char *in)
   memcpy(&rigidBodies[j].roty, ptr, 8); ptr += 8;  //roty --> rotZ
   memcpy(&rigidBodies[j].rotz, ptr, 8); ptr += 8;  //rotz --> rotX
   float mili = 1000;
-  rigidBodies[j].x = -1*rigidBodies[j].x/mili;
-  rigidBodies[j].y = -1*rigidBodies[j].y/mili;
+  rigidBodies[j].x = rigidBodies[j].x/mili;
+  rigidBodies[j].y = rigidBodies[j].y/mili;
   rigidBodies[j].z = rigidBodies[j].z/mili;
   printf_natnet("ID (%d) : %d\n", j, rigidBodies[j].id);
   printf_natnet("pos: [%3.2f,%3.2f,%3.2f]\n", rigidBodies[j].x, rigidBodies[j].y, rigidBodies[j].z);
