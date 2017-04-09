@@ -364,8 +364,22 @@ gboolean network_read(GIOChannel *source, GIOCondition cond, gpointer data) {
         fflush(stdout);
       }
     }
+    //Joystick information publishing
+    else if ((strncmp(RecString, "joyinfo ", strlen("joyinfo "))) == 0) {
+      //Password ok can send command
+      GString *incs = g_string_new(s->str);
+      incs = g_string_erase(s,0, (strlen("joyinfo")+1));
+      IvySendMsg("input2ivy RC_4CH 31 %s", incs->str);
+       // char* RetBufNew;
+       // sprintf(RetBufNew, "input2ivy RC_4CH 0 %s",incs->str);
+       // GOutputStream * ostream = g_io_stream_get_output_stream (data);
+       // g_output_stream_write(ostream, RetBufNew , strlen(RetBufNew), NULL, &error);
+      // if (verbose) {
+      //   fflush(stdout);
+      // }
+    }
     //AC data request. (Ignore client password)
-    else if ((strncmp(RecString, "getac ", strlen("getac "))) == 0) {
+    else if ((strncmp(RecString, "getac1 ", strlen("getac "))) == 0) {
       //AC data request
       char AcData[BUFLEN];
       //Read ac data
@@ -904,7 +918,7 @@ int main(int argc, char **argv) {
   g_signal_connect(service, "incoming", G_CALLBACK(new_connection), NULL);
 
   //Here comes the ivy bindings
-  IvyInit ("PPRZ_App_Server", "Papparazzi App Server Ready!", NULL, NULL, NULL, NULL);
+  IvyInit ("Paparazzi joystick", "READY", NULL, NULL, NULL, NULL);
 
   IvyBindMsg(Ivy_All_Msgs, NULL, "(^ground (\\S*) (\\S*) .*)");
   IvyBindMsg(on_app_server_NEW_AC, NULL, "ground NEW_AIRCRAFT (\\S*)");
@@ -918,7 +932,7 @@ int main(int argc, char **argv) {
     printf("Starting App Server\n");
     fflush(stdout);
   }
-  IvySendMsg("app_server");
+  IvySendMsg("input2ivy");
 
   g_timeout_add(100, request_ac_list, NULL);
 
