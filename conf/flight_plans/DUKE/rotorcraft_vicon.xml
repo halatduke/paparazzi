@@ -64,7 +64,7 @@
     </block>
     <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
       <exception cond="stateGetPositionEnu_f()->z > 1.0" deroute="Standby"/>
-      <call fun="NavSetWaypointHere(WP_Room_Origin)"/>
+      <call fun="NavSetWaypointHere(WP_STDBY)"/>
       <stay climb="nav_climb_vspeed" vmode="climb" wp="Room_Origin"/>
     </block>
     <block name="Standby" strip_button="Standby" strip_icon="home.png">
@@ -138,7 +138,13 @@
       <stay wp="R_b"/>
     </block>
 
-
+    <block name="And Test">
+      <stay wp="Room_Origin" until="( -GetPosX() > 0.4 )" />
+      <!-- <go wp="L_f" /> -->
+      <stay wp="L_b" />
+    </block><!-- 
+    <block name="And Result Test">
+    </block> -->
 
 
 
