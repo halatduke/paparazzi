@@ -160,7 +160,7 @@
       <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-LeftCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-LeftCenterZ) )  )  " />
 
       <!-- <call fun="nav_set_heading_towards_waypoint(WP_L_f)"/> -->
-      <go wp="L_f" />
+      <go wp="L_f" exceeding_time="4"/>
       
       <!-- <call fun="nav_set_heading_towards_waypoint(WP_R_b)"/> -->
       <go wp="R_b" />
@@ -168,7 +168,7 @@
       <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-RightCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-RightCenterZ) )  )  " />
 
       <!-- <call fun="nav_set_heading_towards_waypoint(WP_R_f)"/> -->
-      <go wp="R_f" />
+      <go wp="R_f" exceeding_time="4"/>
       
       <!-- <call fun="nav_set_heading_towards_waypoint(WP_Room_Origin)"/> -->
       <go wp="Room_Origin" />
