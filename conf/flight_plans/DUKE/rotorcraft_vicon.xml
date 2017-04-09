@@ -3,7 +3,14 @@
 <flight_plan alt="1.5" ground_alt="0" lat0="36.005417" lon0="-78.940984" max_dist_from_home="20" name="Rotorcraft Vicon (Duke)" security_height="0.3">
   <header>
 #include "autopilot.h"
+
+
 </header>
+
+
+
+
+
   <waypoints>
     <waypoint name="HOME" x="0.0" y="0.0"/>
     <waypoint name="CLIMB" x="1.2" y="-0.6"/>
@@ -49,6 +56,13 @@
       <corner name="FA4"/>
     </sector>
   </sectors>
+  <variables>
+    <variable var="LeftCenterX" init="-1.579" type="float"/>
+    <variable var="LeftCenterZ" init="1.180"  type="float"/>
+    <variable var="RightCenterX" init="1.587" type="float"/>
+    <variable var="RightCenterZ" init="1.225"  type="float"/>
+    <variable var="ErrorWindow" init="0.15"  type="float"/>
+  </variables>
   <blocks>
     <block name="Wait GPS">
       <call fun="NavKillThrottle()"/>
@@ -139,9 +153,27 @@
     </block>
 
     <block name="And Test">
-      <stay wp="Room_Origin" until="( -GetPosX() > 0.4 )" />
-      <!-- <go wp="L_f" /> -->
-      <stay wp="L_b" />
+      
+      <!-- <call fun="nav_set_heading_towards_waypoint(WP_L_b)"/> -->
+      <go wp="L_b" />
+
+      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-LeftCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-LeftCenterZ) )  )  " />
+
+      <!-- <call fun="nav_set_heading_towards_waypoint(WP_L_f)"/> -->
+      <go wp="L_f" />
+      
+      <!-- <call fun="nav_set_heading_towards_waypoint(WP_R_b)"/> -->
+      <go wp="R_b" />
+      
+      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-RightCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-RightCenterZ) )  )  " />
+
+      <!-- <call fun="nav_set_heading_towards_waypoint(WP_R_f)"/> -->
+      <go wp="R_f" />
+      
+      <!-- <call fun="nav_set_heading_towards_waypoint(WP_Room_Origin)"/> -->
+      <go wp="Room_Origin" />
+      
+      <deroute block="land here"/>
     </block><!-- 
     <block name="And Result Test">
     </block> -->
