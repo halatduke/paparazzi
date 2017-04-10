@@ -1,5 +1,13 @@
 <!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
 
+
+
+<!-- 
+
+$ make clean && make
+
+ -->
+
 <flight_plan alt="1.5" ground_alt="0" lat0="36.005417" lon0="-78.940984" max_dist_from_home="20" name="Rotorcraft Vicon (Duke)" security_height="0.3">
   <header>
 #include "autopilot.h"
@@ -174,7 +182,54 @@
       <go wp="Room_Origin" />
       
       <deroute block="land here"/>
-    </block><!-- 
+    </block>
+
+    <block name="And Test Part 1">
+      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 2"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_L_b)"/>
+      <go wp="L_b" />
+    </block>
+
+    <block name="And Test Part 2">
+      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 3"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_L_f)"/>
+      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-LeftCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-LeftCenterZ) )  )  " />
+    </block>
+
+    <block name="And Test Part 3">
+      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 4"/>
+      <go wp="L_f" exceeding_time="4"/>
+    </block>
+
+    <block name="And Test Part 4">
+      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 5"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_R_b)"/>
+      <go wp="R_b" />
+    </block>
+
+    <block name="And Test Part 5">
+      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 6"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_R_f)"/>
+      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-RightCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-RightCenterZ) )  )  " />
+    </block>
+
+    <block name="And Test Part 6">
+      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 7"/>
+      <go wp="R_f" exceeding_time="4"/>
+    </block>
+
+    <block name="And Test Part 7">
+      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 8"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_Room_Origin)"/>
+      <go wp="Room_Origin" />
+    </block>
+
+    <block name="And Test Part 8">      
+      <deroute block="land here"/>
+    </block>
+
+
+    <!-- 
     <block name="And Result Test">
     </block> -->
 
