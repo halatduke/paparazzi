@@ -47,13 +47,30 @@ $ make clean && make
 
     <waypoint name="Room_Origin" x="0" y="0"/>
 
-    <waypoint name="L_f" x="-1.579" y="2.670"  height="1.180"/>
+    <waypoint name="L_f" x="-1.579" y="3.170"  height="1.180"/>
     <waypoint name="L_c" x="-1.579" y="0.670"  height="1.180"/>
-    <waypoint name="L_b" x="-1.579" y="-1.330" height="1.180"/>
+    <waypoint name="L_b" x="-1.579" y="-1.830" height="1.180"/>
 
-    <waypoint name="R_f" x="1.587"  y="2.638"  height="1.225"/>
+    <waypoint name="R_f" x="1.587"  y="3.138"  height="1.225"/>
     <waypoint name="R_c" x="1.587"  y="0.638"  height="1.225"/>
-    <waypoint name="R_b" x="1.587"  y="-1.362" height="1.225"/>
+    <waypoint name="R_b" x="1.587"  y="-1.862" height="1.225"/>
+
+    <waypoint name="F_t" x="0.086"  y="4.091"  height="2.179"/>
+    <waypoint name="F_c" x="0.086"  y="4.091"  height="1.179"/>
+    <waypoint name="F_b" x="0.086"  y="4.091"  height="0.579"/>
+
+    <waypoint name="B_t"     x="-0.089" y="-2.324" height="2.483"/>
+    <waypoint name="B_c"     x="-0.089" y="-2.324" height="1.483"/>
+    <waypoint name="B_b_pre" x="-0.089" y="-1.324" height="0.683"/>
+    <waypoint name="B_b"     x="-0.089" y="-2.324" height="0.683"/>
+
+    <waypoint name="T_t" x="2.559" y="-2.953" height="1.894"/>
+    <waypoint name="T_c" x="2.559" y="-2.953" height="0.894"/>
+
+    <waypoint name="B_swoop" x="-0.089" y="-1.324" height="0.683"/>
+
+    <waypoint name="Center_Offset" x="1" y="0"/>
+
 
   </waypoints>
   <sectors>
@@ -139,11 +156,9 @@ $ make clean && make
     <block name="TB - L_f">
       <stay wp="L_f"/>
     </block>
-
     <block name="TB - L_c">
       <stay wp="L_c"/>
     </block>
-
     <block name="TB - L_b">
       <stay wp="L_b"/>
     </block>
@@ -151,14 +166,43 @@ $ make clean && make
     <block name="TB - R_f">
       <stay wp="R_f"/>
     </block>
-
     <block name="TB - R_c">
       <stay wp="R_c"/>
     </block>
-
     <block name="TB - R_b">
       <stay wp="R_b"/>
     </block>
+
+    <block name="TB - F_t">
+      <stay wp="F_t"/>
+    </block>
+    <block name="TB - F_c">
+      <stay wp="F_c"/>
+    </block>
+    <block name="TB - F_b">
+      <stay wp="F_b"/>
+    </block>
+
+    <block name="TB - B_t">
+      <stay wp="B_t"/>
+    </block>
+    <block name="TB - B_c">
+      <stay wp="B_c"/>
+    </block>
+    <block name="TB - B_b_pre">
+      <stay wp="B_b_pre"/>
+    </block>
+    <block name="TB - B_b">
+      <stay wp="B_b"/>
+    </block>
+
+    <block name="TB - T_t">
+      <stay wp="T_t"/>
+    </block>
+    <block name="TB - T_c">
+      <stay wp="T_c"/>
+    </block>
+
 
     <block name="And Test">
       
@@ -184,47 +228,130 @@ $ make clean && make
       <deroute block="land here"/>
     </block>
 
-    <block name="And Test Part 1">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 2"/>
+    <block name="And Test Part 0">
+      <exception cond="stateGetPositionEnu_f()->z > 1.0" deroute="And Test Part 0a"/>
+      <stay climb="nav_climb_vspeed" vmode="climb" wp="Room_Origin"/>
+    </block>
+
+    <block name="And Test Part 0a">
+      <go wp="Room_Origin" />
+      <while cond="LessThan(NavBlockTime(),6)" /> 
+      <deroute block="And Test Part 1 - Go To L_b"/>
+    </block>
+
+    <block name="And Test Part 1 - Go To L_b">
+      <exception cond="MoreThan(NavBlockTime(),3.5)" deroute="And Test Part 2"/>
       <call fun="nav_set_heading_towards_waypoint(WP_L_b)"/>
       <go wp="L_b" />
     </block>
 
     <block name="And Test Part 2">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 3"/>
+      <!-- <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 3"/> -->
       <call fun="nav_set_heading_towards_waypoint(WP_L_f)"/>
       <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-LeftCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-LeftCenterZ) )  )  " />
     </block>
 
     <block name="And Test Part 3">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 4"/>
+      <exception cond="MoreThan(NavBlockTime(),5)" deroute="And Test Part 4 - Go To R_b"/>
       <go wp="L_f" exceeding_time="4"/>
     </block>
 
-    <block name="And Test Part 4">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 5"/>
+    <block name="And Test Part 4 - Go To R_b">
+      <exception cond="MoreThan(NavBlockTime(),6)" deroute="And Test Part 4a"/>
       <call fun="nav_set_heading_towards_waypoint(WP_R_b)"/>
       <go wp="R_b" />
     </block>
 
-    <block name="And Test Part 5">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 6"/>
+    <block name="And Test Part 4a">
+      <exception cond="MoreThan(NavBlockTime(),15)" deroute="And Test Part 5"/>
       <call fun="nav_set_heading_towards_waypoint(WP_R_f)"/>
+    </block>
+
+    <block name="And Test Part 5">
+      <!-- <exception cond="MoreThan(NavBlockTime(),15)" deroute="And Test Part 6"/> -->
       <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-RightCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-RightCenterZ) )  )  " />
     </block>
 
     <block name="And Test Part 6">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 7"/>
+      <exception cond="MoreThan(NavBlockTime(),8)" deroute="And Test Part 7 - Go To RoomOrigin"/>
       <go wp="R_f" exceeding_time="4"/>
     </block>
 
-    <block name="And Test Part 7">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 8"/>
+    <block name="And Test Part 7 - Go To RoomOrigin">
+      <exception cond="MoreThan(NavBlockTime(),2)" deroute="And Test Part 8 - Circle Around"/>
       <call fun="nav_set_heading_towards_waypoint(WP_Room_Origin)"/>
-      <go wp="Room_Origin" />
+      <go wp="Center_Offset" />
     </block>
 
-    <block name="And Test Part 8">      
+
+
+<!-- Next Block:  -->
+    
+
+    <block name="And Test Part 8 - Circle Around">      
+      <deroute block="And Test Part 9 - Go To L_b"/>
+    </block>
+
+    <block name="And Test Part 9 - Go To L_b">
+      <exception cond="MoreThan(NavBlockTime(),5)" deroute="And Test Part 10"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_L_b)"/>
+      <go wp="L_b" />
+    </block>
+
+    <block name="And Test Part 10">
+      <!-- <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 11"/> -->
+      <call fun="nav_set_heading_towards_waypoint(WP_L_f)"/>
+      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-LeftCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-LeftCenterZ) )  )  " />
+    </block>
+
+    <block name="And Test Part 11">
+      <exception cond="MoreThan(NavBlockTime(),5)" deroute="And Test Part 12 - Go To F_t"/>
+      <go wp="L_f"/>
+    </block>
+
+    <block name="And Test Part 12 - Go To F_t">
+      <exception cond="MoreThan(NavBlockTime(),6)" deroute="And Test Part 13 - Go to B_swoop"/>
+      <go wp="F_t"/>
+    </block>
+
+    <block name="And Test Part 13 - Go to B_swoop">
+      <exception cond="MoreThan(NavBlockTime(),6)" deroute="And Test Part 14 - Go to R_b"/>
+      <go wp="B_swoop"/>
+    </block>
+
+    <block name="And Test Part 14 - Go to R_b">
+      <exception cond="MoreThan(NavBlockTime(),1.5)" deroute="And Test Part 14a"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_R_b)"/>
+      <go wp="R_b" />
+    </block>
+
+    <block name="And Test Part 14a">
+      <exception cond="MoreThan(NavBlockTime(),15)" deroute="And Test Part 15"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_R_f)"/>
+    </block>
+
+    <block name="And Test Part 15">
+      <!-- <exception cond="MoreThan(NavBlockTime(),15)" deroute="And Test Part 16"/> -->
+      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-RightCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-RightCenterZ) )  )  " />
+    </block>
+
+    <block name="And Test Part 16">
+      <exception cond="MoreThan(NavBlockTime(),8)" deroute="And Test Part 17 - Go To RoomOrigin"/>
+      <go wp="R_f" exceeding_time="4"/>
+    </block>
+
+    <block name="And Test Part 17 - Go To RoomOrigin">
+      <exception cond="MoreThan(NavBlockTime(),6)" deroute="And Test Part 18"/>
+      <call fun="nav_set_heading_towards_waypoint(WP_Center_Offset)"/>
+      <go wp="Center_Offset" />
+<!--       <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-0) ), ( ErrorWindow > fabs(GetPosY()-0) )  )  " /> -->
+    </block>
+
+
+
+
+
+    <block name="And Test Part 18">      
       <deroute block="land here"/>
     </block>
 
