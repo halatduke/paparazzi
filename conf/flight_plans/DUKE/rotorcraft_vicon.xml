@@ -24,7 +24,7 @@ $ make clean && make
     <waypoint name="CLIMB" x="1.2" y="-0.6"/>
     <waypoint name="GOAL" x="2.0" y="2.0"/>
     <waypoint name="STDBY" x="-0.7" y="-0.8"/>
-    <waypoint name="TD" x="0.8" y="-1.7"/>
+    <waypoint name="TD" x="0" y="0"/>
 
     <waypoint name="HERE" x="1" y="1"/>
 <!--     <waypoint lat="51.990630" lon="4.376823" name="p1"/>
@@ -54,6 +54,13 @@ $ make clean && make
     <waypoint name="R_f" x="1.587"  y="2.638"  height="1.225"/>
     <waypoint name="R_c" x="1.587"  y="0.638"  height="1.225"/>
     <waypoint name="R_b" x="1.587"  y="-1.362" height="1.225"/>
+
+    <waypoint name="Land4" x="0"  y="0" height="2.126"/>
+    <waypoint name="Land3" x="0"  y="0" height="1.876"/>
+    <waypoint name="Land2" x="0"  y="0" height="0.626"/>
+    <waypoint name="Land1" x="0"  y="0" height="0.376"/>
+    <waypoint name="Land0" x="0"  y="0" height="0"/>
+
 
   </waypoints>
   <sectors>
@@ -232,6 +239,41 @@ $ make clean && make
     <!-- 
     <block name="And Result Test">
     </block> -->
+
+
+
+    <!-- LAND TEST -->
+    <block name="L4">
+      <go wp="Land4" />
+      <while cond=" ! And(  ( 0.10 > fabs(GetPosX()-0) ), ( 0.10 > fabs(GetPosY()-0) )  )  " />
+    </block>
+
+    <block name="L3">
+      <go wp="Land3" />
+      <while cond=" ! And(  ( 0.05 > fabs(GetPosX()-0) ), ( 0.05 > fabs(GetPosY()-0) )  )  " />
+    </block>
+
+    <block name="L2">
+      <go wp="Land2" />
+      <while cond=" ! And(  ( 0.025 > fabs(GetPosX()-0) ), ( 0.025 > fabs(GetPosY()-0) )  )  " />
+    </block>
+
+    <block name="L1">
+      <go wp="Land1" />
+      <while cond=" ! And(  ( 0.0125 > fabs(GetPosX()-0) ), ( 0.0125 > fabs(GetPosY()-0) )  )  " />
+      <deroute block="land"/>
+    </block>
+
+<!--     <block name="L0">
+    </block>
+ -->
+
+
+
+
+
+
+      
 
 
 
