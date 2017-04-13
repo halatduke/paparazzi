@@ -55,6 +55,11 @@ $ make clean && make
     <waypoint name="R_c" x="1.587"  y="0.638"  height="1.225"/>
     <waypoint name="R_b" x="1.587"  y="-1.362" height="1.225"/>
 
+    <waypoint name="F_RED_t" x="0.073"  y="3.501" height="1.889"/>
+    <waypoint name="F_RED_c" x="0.073"  y="3.501" height="1.289"/>
+    <waypoint name="F_RED_b" x="0.073"  y="3.501" height="0.489"/>
+
+
     <waypoint name="Land4" x="0"  y="0" height="2.126"/>
     <waypoint name="Land3" x="0"  y="0" height="1.876"/>
     <waypoint name="Land2" x="0"  y="0" height="0.626"/>
@@ -166,6 +171,19 @@ $ make clean && make
     <block name="TB - R_b">
       <stay wp="R_b"/>
     </block>
+
+
+
+    <block name="TB - F_RED_t">
+      <stay wp="F_RED_t"/>
+    </block>
+    <block name="TB - F_RED_c">
+      <stay wp="F_RED_c"/>
+    </block>
+    <block name="TB - F_RED_b">
+      <stay wp="F_RED_b"/>
+    </block>
+
 
     <block name="And Test">
       
