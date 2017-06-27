@@ -364,6 +364,13 @@ gboolean network_read(GIOChannel *source, GIOCondition cond, gpointer data) {
         fflush(stdout);
       }
     }
+    //Mode Switching
+    else if ((strncmp(RecString, "mode ", strlen("mode "))) == 0) {
+      //Password ok can send command
+      GString *incs = g_string_new(s->str);
+      incs = g_string_erase(s,0, (strlen("mode")+1));
+      IvySendMsg("input2ivy DL_SETTING %s", incs->str);
+    }
     //Joystick information publishing
     else if ((strncmp(RecString, "joyinfo ", strlen("joyinfo "))) == 0) {
       //Password ok can send command

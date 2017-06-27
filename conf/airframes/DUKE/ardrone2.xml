@@ -37,11 +37,11 @@
     <module name="video_rtp_stream">
       <define name="VIEWVIDEO_CAMERA" value="front_camera"/>
       <define name="VIEWVIDEO_DOWNSIZE_FACTOR" value="4"/>
-      <define name="VIEWVIDEO_QUALITY_FACTOR" value="60"/>
-      <define name="VIEWVIDEO_FPS" value="5" />
+      <define name="VIEWVIDEO_QUALITY_FACTOR" value="20"/>
+      <define name="VIEWVIDEO_FPS" value="15" />
       <define name="VIEWVIDEO_USE_RTP" value="TRUE" />
 	  <configure name="VIEWVIDEO_USE_NETCAT" value="FALSE" />
-	  <configure name="VIEWVIDEO_HOST" value="192.168.1.2" />
+	  <configure name="VIEWVIDEO_HOST" value="192.168.1.4"/>
    	  <configure name="VIEWVIDEO_PORT_OUT" value="5000" />
       <configure name="VIEWVIDEO_BROADCAST" value="FALSE" />
     </module>
@@ -152,16 +152,16 @@
     <define name="REF_MAX_RDOT" value="RadOfDeg(4000.)"/>
 
     <!-- feedback -->
-    <define name="PHI_PGAIN" value="850"/>
-    <define name="PHI_DGAIN" value="425"/>
+    <define name="PHI_PGAIN" value="2450"/>
+    <define name="PHI_DGAIN" value="770"/>
     <define name="PHI_IGAIN" value="0"/>
 
-    <define name="THETA_PGAIN" value="850"/>
-    <define name="THETA_DGAIN" value="425"/>
+    <define name="THETA_PGAIN" value="2450"/>
+    <define name="THETA_DGAIN" value="770"/>
     <define name="THETA_IGAIN" value="0"/>
 
-    <define name="PSI_PGAIN" value="1000"/>
-    <define name="PSI_DGAIN" value="700"/>
+    <define name="PSI_PGAIN" value="1800"/>
+    <define name="PSI_DGAIN" value="770"/>
     <define name="PSI_IGAIN" value="0"/>
 
     <!-- feedforward -->
@@ -171,21 +171,21 @@
   </section>
 
   <section name="GUIDANCE_V" prefix="GUIDANCE_V_">
-    <define name="HOVER_KP" value="283"/>
-    <define name="HOVER_KD" value="82"/>
+    <define name="HOVER_KP" value="883"/>
+    <define name="HOVER_KD" value="145"/>
     <define name="HOVER_KI" value="13"/>
     <define name="NOMINAL_HOVER_THROTTLE" value="0.655"/>
-    <define name="ADAPT_THROTTLE_ENABLED" value="FALSE"/>
+    <define name="ADAPT_THROTTLE_ENABLED" value="TRUE"/>
   </section>
 
   <section name="GUIDANCE_H" prefix="GUIDANCE_H_">
     <!-- Good weather -->
-    <define name="MAX_BANK" value="20" unit="deg"/>
+    <define name="MAX_BANK" value="17" unit="deg"/>
     <!-- Bad weather -->
     <!-- define name="MAX_BANK" value="32" unit="deg"/ -->
-    <define name="PGAIN" value="79"/>
-    <define name="DGAIN" value="100"/>
-    <define name="IGAIN" value="30"/>
+    <define name="PGAIN" value="250"/>
+    <define name="DGAIN" value="216"/>
+    <define name="IGAIN" value="20"/>
   </section>
 
   <section name="SIMULATOR" prefix="NPS_">
@@ -197,12 +197,12 @@
 
   <section name="AUTOPILOT">
     <define name="MODE_STARTUP" value="AP_MODE_NAV"/>
-    <define name="MODE_MANUAL" value="AP_MODE_ATTITUDE_DIRECT"/>
-    <define name="MODE_AUTO1" value="AP_MODE_HOVER_Z_HOLD"/>
+    <define name="MODE_MANUAL" value="AP_MODE_HOVER_Z_HOLD"/>
+    <define name="MODE_AUTO1" value="AP_MODE_ATTITUDE_RC_CLIMB"/>
     <define name="MODE_AUTO2" value="AP_MODE_NAV"/>
     <define name="ARRIVED_AT_WAYPOINT" value="0.15"/>
     <define name="AUTOPILOT_IN_FLIGHT_MIN_THRUST" value="1500"/>
-    <!--   <define name="NO_RC_THRUST_LIMIT" value="TRUE"/> -->
+    <define name="NO_RC_THRUST_LIMIT" value="TRUE"/>
   </section>
 
   <section name="BAT">

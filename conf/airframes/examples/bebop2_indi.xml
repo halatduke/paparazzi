@@ -14,7 +14,7 @@
       <define name="STABILIZATION_INDI_G2_R" value="0.0"/>
     </target>
 
-	  <!-- Subsystem section -->
+    <!-- Subsystem section -->
     <module name="telemetry" type="transparent_udp"/>
     <module name="radio_control" type="datalink"/>
     <module name="motor_mixing"/>

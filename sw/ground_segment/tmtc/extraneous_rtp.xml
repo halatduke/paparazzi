@@ -1,0 +1,6 @@
+      <define name="VIEWVIDEO_FPS" value="5" />
+      <define name="VIEWVIDEO_USE_RTP" value="TRUE" />
+	  <configure name="VIEWVIDEO_USE_NETCAT" value="FALSE" />
+	  <configure name="VIEWVIDEO_HOST" value="192.168.50.1" />
+   	  <configure name="VIEWVIDEO_PORT_OUT" value="5000" />
+      <configure name="VIEWVIDEO_BROADCAST" value="FALSE" />

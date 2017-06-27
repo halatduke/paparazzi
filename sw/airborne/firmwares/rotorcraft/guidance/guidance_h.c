@@ -609,7 +609,11 @@ static void guidance_h_hover_enter(void)
   VECT2_COPY(guidance_h.sp.pos, *stateGetPositionNed_i());
 
   /* reset guidance reference */
-  reset_guidance_reference_from_current_position();
+
+  //line removed by Ben Welton on 6/3/17, prevents drone from shifting xy when
+  //entering hover mode
+
+  //reset_guidance_reference_from_current_position();
 
   /* set guidance to current heading and position */
   guidance_h.rc_sp.psi = stateGetNedToBodyEulers_i()->psi;
@@ -625,7 +629,7 @@ static void guidance_h_nav_enter(void)
   INT32_VECT2_NED_OF_ENU(guidance_h.sp.pos, navigation_carrot);
 
   reset_guidance_reference_from_current_position();
-
+  
   nav_heading = stateGetNedToBodyEulers_i()->psi;
 }
 

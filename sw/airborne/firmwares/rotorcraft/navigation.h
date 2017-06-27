@@ -111,7 +111,7 @@ extern bool nav_set_heading_current(void);
 #define NavSetGroundReferenceHere() ({ nav_reset_reference(); false; })
 #define NavSetAltitudeReferenceHere() ({ nav_reset_alt(); false; })
 
-#define NavSetWaypointHere(_wp) ({ waypoint_set_here_2d(_wp); false; })
+#define NavSetWaypointHere(_wp) ({ waypoint_set_here(_wp); false; })
 #define NavCopyWaypoint(_wp1, _wp2) ({ waypoint_copy(_wp1, _wp2); false; })
 #define NavCopyWaypointPositionOnly(_wp1, _wp2) ({ waypoint_position_copy(_wp1, _wp2); false; })
 

@@ -364,6 +364,20 @@ gboolean network_read(GIOChannel *source, GIOCondition cond, gpointer data) {
         fflush(stdout);
       }
     }
+    //Joystick information publishing
+    else if ((strncmp(RecString, "joyinfo ", strlen("joyinfo "))) == 0) {
+      //Password ok can send command
+      GString *incs = g_string_new(s->str);
+      incs = g_string_erase(s,0, (strlen("joyinfo")+1));
+      IvySendMsg("input2ivy RC_4CH 31 %s", incs->str);
+       // char* RetBufNew;
+       // sprintf(RetBufNew, "input2ivy RC_4CH 0 %s",incs->str);
+       // GOutputStream * ostream = g_io_stream_get_output_stream (data);
+       // g_output_stream_write(ostream, RetBufNew , strlen(RetBufNew), NULL, &error);
+      // if (verbose) {
+      //   fflush(stdout);
+      // }
+    }
     //AC data request. (Ignore client password)
     else if ((strncmp(RecString, "getac ", strlen("getac "))) == 0) {
       //AC data request

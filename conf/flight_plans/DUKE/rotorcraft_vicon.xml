@@ -1,88 +1,33 @@
 <!DOCTYPE flight_plan SYSTEM "flight_plan.dtd">
 
-
-
-<!-- 
-
-$ make clean && make
-
- -->
-
-<flight_plan alt="1.5" ground_alt="0" lat0="36.005417" lon0="-78.940984" max_dist_from_home="20" name="Rotorcraft Vicon (Duke)" security_height="0.3">
+<flight_plan alt="1.2" ground_alt="-0.3000888" lat0="36.005417" lon0="-78.940984" max_dist_from_home="100" name="Rotorcraft Vicon (Duke)" security_height="0.3">
   <header>
 #include "autopilot.h"
-
-
-</header>
-
-
-
-
-
+  </header>
   <waypoints>
     <waypoint name="HOME" x="0.0" y="0.0"/>
     <waypoint name="CLIMB" x="1.2" y="-0.6"/>
     <waypoint name="GOAL" x="2.0" y="2.0"/>
-    <waypoint name="STDBY" x="-0.7" y="-0.8"/>
+    <waypoint name="STDBY" x="0" y="0"/>
     <waypoint name="TD" x="0" y="0"/>
 
-    <waypoint name="HERE" x="1" y="1"/>
-<!--     <waypoint lat="51.990630" lon="4.376823" name="p1"/>
-    <waypoint lat="51.990614" lon="4.376779" name="p2"/>
-    <waypoint lat="51.990636" lon="4.376759" name="p3"/>
-    <waypoint lat="51.990651" lon="4.376805" name="p4"/> -->
-    <!-- <waypoint lat="51.9906213" lon="4.3768628" name="FA1"/>
-    <waypoint lat="51.9905874" lon="4.3767766" name="FA2"/>
-    <waypoint lat="51.9906409" lon="4.3767226" name="FA3"/>
-    <waypoint lat="51.9906737" lon="4.3768074" name="FA4"/> -->
-    <waypoint name="FA1" x="-2.5242" y="3.5815"/>
-    <waypoint name="FA2" x="2.5242" y="3.5815"/>
-    <waypoint name="FA3" x="2.5242" y="-3.5815"/>
-    <waypoint name="FA4" x="-2.5242" y="-3.5815"/>
+    <waypoint name="HERE" x="0" y="0"/>
+    <waypoint name="NEXT" x= "1.0" y="1.0" height="1.0"/>
 
-    <waypoint name="demo1" x="-1.5" y="2.5"/>
-    <waypoint name="demo2" x="1.5" y="-2.5"/>
-    <waypoint name="demo3" x="-1.3" y="-2.3"/>
-    <waypoint name="demo4" x="1.3" y="2.3"/> 
-
-    <waypoint name="Room_Origin" x="0" y="0"/>
+    <waypoint name="ORIGIN" x="0" y="0"/>
 
     <waypoint name="L_f" x="-1.579" y="2.670"  height="1.180"/>
     <waypoint name="L_c" x="-1.579" y="0.670"  height="1.180"/>
     <waypoint name="L_b" x="-1.579" y="-1.330" height="1.180"/>
 
-    <waypoint name="R_f" x="1.587"  y="2.638"  height="1.225"/>
+   <!-- <waypoint name="R_f" x="1.587"  y="2.638"  height="1.225"/>
     <waypoint name="R_c" x="1.587"  y="0.638"  height="1.225"/>
-    <waypoint name="R_b" x="1.587"  y="-1.362" height="1.225"/>
+    <waypoint name="R_b" x="1.587"  y="-1.362" height="1.225"/> -->
 
     <waypoint name="F_RED_t" x="0.073"  y="3.501" height="1.889"/>
     <waypoint name="F_RED_c" x="0.073"  y="3.501" height="1.289"/>
-    <waypoint name="F_RED_b" x="0.073"  y="3.501" height="0.489"/>
-
-
-    <waypoint name="Land4" x="0"  y="0" height="2.126"/>
-    <waypoint name="Land3" x="0"  y="0" height="1.876"/>
-    <waypoint name="Land2" x="0"  y="0" height="0.626"/>
-    <waypoint name="Land1" x="0"  y="0" height="0.376"/>
-    <waypoint name="Land0" x="0"  y="0" height="0"/>
-
-
+    <waypoint name="F_RED_b" x="0.073"  y="3.501" height="0.489"/> 
   </waypoints>
-  <sectors>
-    <sector color="red" name="Flight_Area">
-      <corner name="FA1"/>
-      <corner name="FA2"/>
-      <corner name="FA3"/>
-      <corner name="FA4"/>
-    </sector>
-  </sectors>
-  <variables>
-    <variable var="LeftCenterX" init="-1.579" type="float"/>
-    <variable var="LeftCenterZ" init="1.180"  type="float"/>
-    <variable var="RightCenterX" init="1.587" type="float"/>
-    <variable var="RightCenterZ" init="1.225"  type="float"/>
-    <variable var="ErrorWindow" init="0.15"  type="float"/>
-  </variables>
   <blocks>
     <block name="Wait GPS">
       <call fun="NavKillThrottle()"/>
@@ -90,37 +35,37 @@ $ make clean && make
     </block>
     <block name="Holding point">
       <call fun="NavKillThrottle()"/>
-      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+      <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
     </block>
     <block name="Start Engine">
       <call fun="NavResurrect()"/>
-      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+      <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
     </block>
     <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
       <exception cond="stateGetPositionEnu_f()->z > 1.0" deroute="Standby"/>
       <call fun="NavSetWaypointHere(WP_STDBY)"/>
-      <stay climb="nav_climb_vspeed" vmode="climb" wp="Room_Origin"/>
+      <stay climb="nav_climb_vspeed" vmode="climb" wp="ORIGIN"/>
     </block>
     <block name="Standby" strip_button="Standby" strip_icon="home.png">
-      <stay wp="Room_Origin"/>
+      <stay wp="ORIGIN"/>
     </block>
-    <block name="START" strip_button="Go" strip_icon="lookfore.png">
+    <!-- <block name="START" strip_button="Go" strip_icon="lookfore.png">
       <call fun="NavSetWaypointHere(WP_GOAL)"/>
     </block>
     <block name="StayGoal">
       <stay wp="GOAL"/>
-    </block>
-<!--     <block name="stay_p1">
+    </block> -->
+   <!-- <block name="stay_p1">
       <stay wp="p1"/>
     </block>
     <block name="go_p2">
       <call fun="nav_set_heading_deg(90)"/>
       <go wp="p2"/>
       <deroute block="stay_p1"/>
-    </block> -->
-<!--     <block name="line_p1_p2">
+    </block>
+    <block name="line_p1_p2">
       <go from="p1" hmode="route" wp="p2"/>
-      <stay until="stage_time>10" wp="p2"/>
+      <stay wp="p2" until="stage_time>10"/>
       <go from="p2" hmode="route" wp="p1"/>
       <deroute block="stay_p1"/>
     </block>
@@ -129,26 +74,31 @@ $ make clean && make
       <go from="p3" hmode="route" wp="p4"/>
       <go from="p4" hmode="route" wp="p1"/>
       <deroute block="stay_p1"/>
-    </block> -->
-<!--     <block name="Oval">
+    </block>
+    <block name="Oval">
       <oval p1="p1" p2="p2" radius="-1"/>
     </block> -->
-    <block name="epic demo">
-        <call fun="NavSetWaypointHere(WP_HERE)"/>
-        <call fun="nav_set_heading_towards_waypoint(WP_demo1)"/>
-        <go from="HERE" hmode="route" wp="demo1"/>
-        <call fun="nav_set_heading_towards_waypoint(WP_demo2)"/>
-        <go from="demo1" hmode="route" wp="demo2"/>
-        <call fun="nav_set_heading_towards_waypoint(WP_demo3)"/>
-        <go from="demo2" hmode="route" wp="demo3"/>
-        <call fun="nav_set_heading_towards_waypoint(WP_demo4)"/>
-        <go from="demo3" hmode="route" wp="demo4"/>
-        <call fun="nav_set_heading_towards_waypoint(WP_STDBY)"/>
-        <go from="demo4" hmode="route" wp="HOME"/>
-        <deroute block="land here"/>
+
+    <block name ="START">
     </block>
 
-    <block name="TB - L_f">
+    <block name="Next Waypoint!">
+    </block>
+
+    <block name="Flying">
+	<go wp = "NEXT" />
+    </block>
+
+    <block name="Arrived at Waypoint">
+	<stay wp = "NEXT" />
+    </block>
+
+    <block name="PAUSE" >
+	<call fun="NavSetWaypointHere(WP_STDBY)"/>
+	<stay wp="STDBY"/>
+    </block>
+
+    <!-- <block name="TB - L_f">
       <stay wp="L_f"/>
     </block>
 
@@ -170,7 +120,7 @@ $ make clean && make
 
     <block name="TB - R_b">
       <stay wp="R_b"/>
-    </block>
+    </block> 
 
 
 
@@ -182,124 +132,18 @@ $ make clean && make
     </block>
     <block name="TB - F_RED_b">
       <stay wp="F_RED_b"/>
-    </block>
-
-
-    <block name="And Test">
-      
-      <call fun="nav_set_heading_towards_waypoint(WP_L_b)"/>
-      <go wp="L_b" />
-
-      <call fun="nav_set_heading_towards_waypoint(WP_L_f)"/>
-      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-LeftCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-LeftCenterZ) )  )  " />
-
-      <go wp="L_f" exceeding_time="4"/>
-      
-      <call fun="nav_set_heading_towards_waypoint(WP_R_b)"/>
-      <go wp="R_b" />
-      
-      <call fun="nav_set_heading_towards_waypoint(WP_R_f)"/>
-      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-RightCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-RightCenterZ) )  )  " />
-
-      <go wp="R_f" exceeding_time="4"/>
-      
-      <call fun="nav_set_heading_towards_waypoint(WP_Room_Origin)"/>
-      <go wp="Room_Origin" />
-      
-      <deroute block="land here"/>
-    </block>
-
-    <block name="And Test Part 1">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 2"/>
-      <call fun="nav_set_heading_towards_waypoint(WP_L_b)"/>
-      <go wp="L_b" />
-    </block>
-
-    <block name="And Test Part 2">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 3"/>
-      <call fun="nav_set_heading_towards_waypoint(WP_L_f)"/>
-      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-LeftCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-LeftCenterZ) )  )  " />
-    </block>
-
-    <block name="And Test Part 3">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 4"/>
-      <go wp="L_f" exceeding_time="4"/>
-    </block>
-
-    <block name="And Test Part 4">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 5"/>
-      <call fun="nav_set_heading_towards_waypoint(WP_R_b)"/>
-      <go wp="R_b" />
-    </block>
-
-    <block name="And Test Part 5">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 6"/>
-      <call fun="nav_set_heading_towards_waypoint(WP_R_f)"/>
-      <while cond=" ! And(  ( ErrorWindow > fabs(GetPosX()-RightCenterX) ), ( ErrorWindow > fabs(GetPosAlt()-RightCenterZ) )  )  " />
-    </block>
-
-    <block name="And Test Part 6">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 7"/>
-      <go wp="R_f" exceeding_time="4"/>
-    </block>
-
-    <block name="And Test Part 7">
-      <exception cond="MoreThan(NavBlockTime(),3)" deroute="And Test Part 8"/>
-      <call fun="nav_set_heading_towards_waypoint(WP_Room_Origin)"/>
-      <go wp="Room_Origin" />
-    </block>
-
-    <block name="And Test Part 8">      
-      <deroute block="land here"/>
-    </block>
-
-
-    <!-- 
-    <block name="And Result Test">
     </block> -->
 
-
-
-    <!-- LAND TEST -->
-    <block name="L4">
-      <go wp="Land4" />
-      <while cond=" ! And(  ( 0.10 > fabs(GetPosX()-0) ), ( 0.10 > fabs(GetPosY()-0) )  )  " />
-    </block>
-
-    <block name="L3">
-      <go wp="Land3" />
-      <while cond=" ! And(  ( 0.05 > fabs(GetPosX()-0) ), ( 0.05 > fabs(GetPosY()-0) )  )  " />
-    </block>
-
-    <block name="L2">
-      <go wp="Land2" />
-      <while cond=" ! And(  ( 0.025 > fabs(GetPosX()-0) ), ( 0.025 > fabs(GetPosY()-0) )  )  " />
-    </block>
-
-    <block name="L1">
-      <go wp="Land1" />
-      <while cond=" ! And(  ( 0.0125 > fabs(GetPosX()-0) ), ( 0.0125 > fabs(GetPosY()-0) )  )  " />
-      <deroute block="land"/>
-    </block>
-
-<!--     <block name="L0">
-    </block>
- -->
-
-
-
-
-
-
-      
-
-
-
-    <block name="land here" strip_button="Land Here" strip_icon="land-right.png">
+    <block name="Land Here" strip_button="Land Here" strip_icon="land-right.png">
       <call fun="NavSetWaypointHere(WP_TD)"/>
+      <deroute block="flare"/>
     </block>
-    <block name="land">
-      <go wp="TD"/>
+    <block name="Land at Center">
+      <go wp="ORIGIN"/>
+      <exception cond="NavDetectGround()" deroute="Holding point"/>
+      <exception cond="!nav_is_in_flight()" deroute="landed"/>
+      <call fun="NavStartDetectGround()"/>
+      <stay climb="nav_descend_vspeed" vmode="climb" wp="ORIGIN"/>
     </block>
     <block name="flare">
       <exception cond="NavDetectGround()" deroute="Holding point"/>
@@ -309,7 +153,7 @@ $ make clean && make
     </block>
     <block name="landed">
       <call fun="NavKillThrottle()"/>
-      <attitude pitch="0" roll="0" throttle="0" until="FALSE" vmode="throttle"/>
+      <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
     </block>
   </blocks>
 </flight_plan>

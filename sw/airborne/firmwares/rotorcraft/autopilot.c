@@ -455,7 +455,7 @@ void autopilot_set_mode(uint8_t new_autopilot_mode)
         return;
 #endif
         break;
-      case AP_MODE_ATTITUDE_RC_CLIMB:
+      //case AP_MODE_ATTITUDE_RC_CLIMB:
       case AP_MODE_ATTITUDE_DIRECT:
       case AP_MODE_ATTITUDE_CLIMB:
       case AP_MODE_ATTITUDE_Z_HOLD:
@@ -470,6 +470,7 @@ void autopilot_set_mode(uint8_t new_autopilot_mode)
       case AP_MODE_HOVER_DIRECT:
       case AP_MODE_HOVER_CLIMB:
       case AP_MODE_HOVER_Z_HOLD:
+      case AP_MODE_ATTITUDE_RC_CLIMB:
         guidance_h_mode_changed(GUIDANCE_H_MODE_HOVER);
         break;
       case AP_MODE_HOME:
